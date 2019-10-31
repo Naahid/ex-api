@@ -5,6 +5,9 @@ const expressLayouts = require('express-ejs-layouts')
 const mongoose = require('mongoose')
 
 const indexRouter = require('./routes/index')
+const authorRouter = require('./routes/authors')
+
+const bodyParser = require('body-parser')
 
 require('dotenv').config();
 
@@ -17,8 +20,11 @@ app.set('layout', 'layouts/layout')
 app.use(expressLayouts)
 app.use(express.static('public'))
 
+app.use(bodyParser.urlencoded({ limit: '10mb', extended: false}));
+
 
 app.use('/', indexRouter);
+app.use('/authors', authorRouter)
 
 const uri = process.env.ATLAS_URI;
 mongoose.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true }
@@ -29,7 +35,8 @@ connection.once('open', () => {
 })
 
 
-const port = process.env.PORT || 2020
+// app.listen(process.env.PORT || 9000)
+const port = process.env.PORT || 4000
 app.listen(port, () => {
     console.log(`Server started on port: ${port}`);
 });
