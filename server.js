@@ -6,6 +6,8 @@ const mongoose = require('mongoose')
 
 const indexRouter = require('./routes/index')
 const authorRouter = require('./routes/authors')
+const bookRouter = require('./routes/books')
+
 
 const bodyParser = require('body-parser')
 
@@ -25,6 +27,8 @@ app.use(bodyParser.urlencoded({ limit: '10mb', extended: false}));
 
 app.use('/', indexRouter);
 app.use('/authors', authorRouter)
+app.use('/books', bookRouter)
+
 
 const uri = process.env.ATLAS_URI;
 mongoose.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true }
